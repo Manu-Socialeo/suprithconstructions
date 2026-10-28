@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Realestay – Buy, rent, or sell your property easily</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --teal: #0a5c63;
+      --teal-mid: #0d7377;
+      --teal-light: #14919b;
+      --teal-dark: #074247;
+      --black: #0f0f0f;
+      --gray-900: #111827;
+      --gray-800: #1f2937;
+      --gray-700: #374151;
+      --gray-600: #4b5563;
+      --gray-500: #6b7280;
+      --gray-400: #9ca3af;
+      --gray-300: #d1d5db;
+      --gray-200: #e5e7eb;
+      --gray-100: #f3f4f6;
+      --gray-50: #f9fafb;
+      --white: #ffffff;
+      --radius-xl: 24px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --radius-full: 9999px;
+      --shadow-card: 0 4px 24px rgba(0,0,0,0.06);
+      --shadow-lg: 0 20px 50px rgba(0,0,0,0.12);
+      --shadow-search: 0 25px 60px rgba(0,0,0,0.15);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--gray-900);
+      background: var(--white);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    img { max-width: 100%; display: block; }
+    input, select { font-family: inherit; }
+
+    .header {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 40px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 1.2rem; color: var(--white); letter-spacing: -0.01em; }
+    .logo-icon { width: 28px; height: 28px; background: var(--white); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+    .logo-icon svg { width: 16px; height: 16px; fill: var(--teal); }
+    .nav { display: flex; align-items: center; gap: 28px; }
+    .nav a { color: rgba(255,255,255,0.92); font-size: 0.9rem; font-weight: 500; transition: opacity 0.2s; }
+    .nav a:hover { opacity: 0.8; }
+    .nav-dropdown { display: flex; align-items: center; gap: 3px; }
+    .nav-dropdown svg { width: 12px; height: 12px; opacity: 0.8; }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .icon-btn { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: var(--white); transition: background 0.2s; }
+    .icon-btn:hover { background: rgba(255,255,255,0.22); }
+    .icon-btn svg { width: 16px; height: 16px; }
+    .btn-get-started { background: var(--white); color: var(--black); padding: 9px 20px; border-radius: var(--radius-full); font-weight: 600; font-size: 0.875rem; transition: transform 0.15s, box-shadow 0.15s; }
+    .btn-get-started:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+
+    .hero {
+      position: relative; min-height: 620px;
+      background: linear-gradient(120deg, #064048 0%, #0a5c63 35%, #0d7377 70%, #1a9aa3 100%);
+      overflow: hidden; display: flex; align-items: center; padding: 100px 40px 60px;
+    }
+    .hero-bg-img {
+      position: absolute; right: 0; bottom: 0; width: 58%; height: 100%;
+      object-fit: cover; object-position: left center; opacity: 0.55;
+      mask-image: linear-gradient(90deg, transparent 0%, black 25%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 25%);
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(105deg, rgba(6,64,72,0.92) 0%, rgba(10,92,99,0.75) 40%, rgba(13,115,119,0.35) 70%, rgba(20,145,155,0.15) 100%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 480px; color: var(--white); }
+    .badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.14); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      padding: 5px 12px 5px 10px; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 500;
+      margin-bottom: 22px; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .badge-dot { width: 7px; height: 7px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 0 2px rgba(34,197,94,0.3); }
+    .hero h1 { font-size: 3.1rem; font-weight: 700; line-height: 1.12; margin-bottom: 14px; letter-spacing: -0.03em; }
+    .hero p { font-size: 0.98rem; opacity: 0.88; margin-bottom: 28px; max-width: 380px; line-height: 1.55; }
+    .btn-contact {
+      display: inline-flex; align-items: center; gap: 8px; background: var(--black); color: var(--white);
+      padding: 12px 22px; border-radius: var(--radius-full); font-weight: 600; font-size: 0.9rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-contact:hover { background: #1a1a1a; transform: translateY(-1px); }
+    .btn-contact svg { width: 16px; height: 16px; }
+
+    .search-card {
+      position: absolute; right: 48px; top: 50%; transform: translateY(-48%); z-index: 5;
+      background: var(--white); border-radius: 22px; padding: 28px 26px 26px; width: 340px;
+      box-shadow: var(--shadow-search);
+    }
+    .search-card h2 { font-size: 1.35rem; font-weight: 700; line-height: 1.3; margin-bottom: 20px; color: var(--gray-900); letter-spacing: -0.02em; }
+    .form-group { margin-bottom: 12px; position: relative; }
+    .form-group .icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gray-400); pointer-events: none; display: flex; }
+    .form-group .icon svg { width: 16px; height: 16px; }
+    .form-group input, .form-group select {
+      width: 100%; padding: 12px 14px 12px 40px; border: 1.5px solid var(--gray-200); border-radius: 11px;
+      font-size: 0.9rem; color: var(--gray-800); background: var(--white); appearance: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input::placeholder { color: var(--gray-400); }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--teal-mid); box-shadow: 0 0 0 3px rgba(13,115,119,0.12); }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; color: var(--gray-500);
+    }
+    .btn-search { width: 100%; background: var(--black); color: var(--white); padding: 13px; border-radius: 11px; font-weight: 600; font-size: 0.95rem; margin-top: 6px; transition: background 0.2s; }
+    .btn-search:hover { background: #222; }
+
+    .stats { display: flex; justify-content: center; align-items: flex-start; gap: 56px; padding: 40px 40px 28px; background: var(--white); }
+    .stat { text-align: center; }
+    .stat-value { font-size: 2.35rem; font-weight: 700; color: var(--gray-900); display: flex; align-items: center; justify-content: center; gap: 3px; letter-spacing: -0.03em; line-height: 1.1; }
+    .stat-value .plus { font-size: 1.4rem; font-weight: 600; }
+    .stat-value .info { width: 15px; height: 15px; border-radius: 50%; border: 1.5px solid var(--gray-300); display: inline-flex; align-items: center; justify-content: center; font-size: 0.6rem; color: var(--gray-400); font-weight: 600; margin-left: 2px; cursor: help; }
+    .stat-label { font-size: 0.82rem; color: var(--gray-500); margin-top: 4px; }
+    .stat-retention .stat-value { font-size: 2.1rem; }
+    .stat-retention .stat-label { max-width: 160px; margin: 4px auto 0; font-size: 0.75rem; line-height: 1.35; }
+
+    .about { padding: 48px 40px 36px; max-width: 820px; margin: 0 auto; text-align: center; }
+    .about p { font-size: 1.05rem; color: var(--gray-600); line-height: 1.7; }
+    .about strong { color: var(--gray-900); font-weight: 600; }
+
+    .properties { padding: 20px 40px 72px; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+    .section-header h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.025em; color: var(--gray-900); }
+    .scroll-btn { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--gray-200); display: flex; align-items: center; justify-content: center; color: var(--gray-600); transition: border-color 0.2s, background 0.2s; }
+    .scroll-btn:hover { border-color: var(--teal-mid); background: var(--gray-50); }
+    .scroll-btn svg { width: 18px; height: 18px; }
+
+    .filters { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+    .filter-btn { padding: 7px 16px; border-radius: var(--radius-full); font-size: 0.82rem; font-weight: 500; color: var(--gray-600); background: var(--gray-100); transition: all 0.2s; white-space: nowrap; }
+    .filter-btn.active { background: var(--black); color: var(--white); }
+    .filter-btn:hover:not(.active) { background: var(--gray-200); }
+    .filter-nav { display: flex; gap: 6px; margin-left: auto; }
+    .filter-nav button { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--gray-200); display: flex; align-items: center; justify-content: center; color: var(--gray-500); }
+    .filter-nav svg { width: 14px; height: 14px; }
+
+    .property-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .property-card { background: var(--white); border-radius: 18px; overflow: hidden; box-shadow: var(--shadow-card); transition: transform 0.25s, box-shadow 0.25s; }
+    .property-card:hover { transform: translateY(-5px); box-shadow: 0 12px 36px rgba(0,0,0,0.1); }
+    .property-img { height: 200px; overflow: hidden; background: var(--gray-100); }
+    .property-img img { width: 100%; height: 100%; object-fit: cover; }
+    .property-body { padding: 16px 18px 20px; }
+    .property-body h3 { font-size: 1.02rem; font-weight: 600; margin-bottom: 10px; color: var(--gray-900); letter-spacing: -0.01em; }
+    .property-meta { display: flex; gap: 14px; font-size: 0.8rem; color: var(--gray-500); margin-bottom: 12px; }
+    .property-meta span { display: flex; align-items: center; gap: 4px; }
+    .property-meta svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .property-price { font-size: 1.15rem; font-weight: 700; color: var(--gray-900); letter-spacing: -0.02em; }
+
+    .agents { padding: 56px 40px; background: var(--gray-50); }
+    .agents-inner { max-width: 1060px; margin: 0 auto; }
+    .agents h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 28px; letter-spacing: -0.025em; }
+    .agents-card { display: grid; grid-template-columns: 340px 1fr; background: var(--white); border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-card); }
+    .agent-photo { position: relative; min-height: 400px; background: #e8f0f0; }
+    .agent-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+    .agent-photo .view-more {
+      position: absolute; bottom: 20px; left: 20px; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+      padding: 8px 14px; border-radius: var(--radius-full); font-size: 0.8rem; font-weight: 500;
+      display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); color: var(--gray-800);
+    }
+    .agent-info { padding: 36px 36px 32px; display: flex; flex-direction: column; justify-content: center; }
+    .agent-info h3 { font-size: 1.25rem; font-weight: 600; line-height: 1.4; margin-bottom: 10px; color: var(--gray-900); letter-spacing: -0.015em; }
+    .agent-info h3 .highlight { color: var(--teal-mid); }
+    .agent-info > p { color: var(--gray-500); font-size: 0.88rem; margin-bottom: 24px; max-width: 460px; line-height: 1.55; }
+    .agent-details { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+    .agent-details h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; color: var(--gray-800); }
+    .agent-details h4 svg { width: 14px; height: 14px; color: var(--gray-500); }
+    .agent-details p { font-size: 0.8rem; color: var(--gray-500); line-height: 1.45; }
+    .agent-avatars { display: flex; margin-top: 10px; }
+    .agent-avatars img { height: 32px; border-radius: 16px; }
+    .contact-links { font-size: 0.8rem; color: var(--gray-500); line-height: 1.5; }
+    .contact-links a { color: var(--teal-mid); font-weight: 500; }
+    .socials { display: flex; gap: 8px; margin-top: 8px; }
+    .socials a { width: 28px; height: 28px; border-radius: 50%; background: var(--gray-100); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; color: var(--gray-600); }
+    .btn-join { align-self: flex-start; border: 1.5px solid var(--gray-300); padding: 9px 20px; border-radius: var(--radius-full); font-weight: 600; font-size: 0.85rem; color: var(--gray-800); transition: all 0.2s; }
+    .btn-join:hover { border-color: var(--teal-mid); color: var(--teal-mid); }
+
+    .testimonials { padding: 64px 40px 48px; text-align: center; }
+    .testimonials h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 36px; letter-spacing: -0.025em; }
+    .testimonial-wrap { position: relative; max-width: 780px; margin: 0 auto; }
+    .testimonial-card { background: var(--white); border-radius: 22px; box-shadow: var(--shadow-lg); display: grid; grid-template-columns: 1fr 240px; overflow: hidden; text-align: left; }
+    .testimonial-content { padding: 32px 30px; }
+    .quote-icon { font-size: 2.8rem; color: var(--gray-200); line-height: 0.8; margin-bottom: 10px; font-family: Georgia, serif; }
+    .testimonial-content > p { font-size: 0.98rem; color: var(--gray-700); line-height: 1.6; margin-bottom: 24px; }
+    .testimonial-author h4 { font-size: 0.95rem; font-weight: 600; color: var(--gray-900); }
+    .testimonial-author span { font-size: 0.8rem; color: var(--gray-500); display: block; margin-top: 2px; }
+    .stars { color: #f59e0b; font-size: 0.85rem; margin-top: 6px; letter-spacing: 1px; }
+    .testimonial-photo { background: #e0f2f1; }
+    .testimonial-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+    .testimonial-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 38px; height: 38px; border-radius: 50%; background: var(--white); box-shadow: 0 4px 14px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; color: var(--gray-700); z-index: 5; }
+    .testimonial-nav.prev { left: -19px; }
+    .testimonial-nav.next { right: -19px; }
+    .testimonial-nav svg { width: 16px; height: 16px; }
+
+    .faq { padding: 48px 40px 80px; max-width: 860px; margin: 0 auto; }
+    .faq-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; gap: 40px; }
+    .faq-header h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 8px; }
+    .faq-header p { color: var(--gray-500); font-size: 0.9rem; max-width: 260px; line-height: 1.5; }
+    .faq-header a { color: var(--teal-mid); font-weight: 500; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 3px; margin-top: 10px; }
+    .faq-list { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .faq-item { border: 1.5px solid var(--gray-200); border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+    .faq-item.open { border-color: var(--teal-mid); }
+    .faq-question { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; font-size: 0.95rem; font-weight: 600; text-align: left; color: var(--gray-900); gap: 12px; }
+    .faq-question svg { width: 18px; height: 18px; color: var(--gray-400); transition: transform 0.25s; flex-shrink: 0; }
+    .faq-item.open .faq-question svg { transform: rotate(180deg); color: var(--teal-mid); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
+    .faq-item.open .faq-answer { max-height: 180px; padding: 0 18px 16px; }
+    .faq-answer p { color: var(--gray-600); font-size: 0.9rem; line-height: 1.55; }
+
+    .footer { background: var(--gray-900); color: var(--gray-400); padding: 28px 40px; text-align: center; font-size: 0.85rem; }
+    .footer a { color: var(--white); margin: 0 6px; }
+
+    @media (max-width: 1100px) {
+      .search-card { right: 28px; width: 310px; }
+      .property-grid { grid-template-columns: repeat(2, 1fr); }
+      .agents-card { grid-template-columns: 300px 1fr; }
+    }
+    @media (max-width: 900px) {
+      .header { padding: 14px 20px; }
+      .nav { display: none; }
+      .hero { min-height: auto; padding: 100px 20px 40px; flex-direction: column; align-items: flex-start; }
+      .hero h1 { font-size: 2.3rem; }
+      .hero-bg-img { display: none; }
+      .search-card { position: relative; right: auto; top: auto; transform: none; margin-top: 36px; width: 100%; max-width: 400px; }
+      .stats { flex-wrap: wrap; gap: 28px; padding: 32px 20px; }
+      .about, .properties, .agents, .testimonials, .faq { padding-left: 20px; padding-right: 20px; }
+      .property-grid { grid-template-columns: 1fr; }
+      .agents-card { grid-template-columns: 1fr; }
+      .agent-photo { min-height: 320px; }
+      .testimonial-card { grid-template-columns: 1fr; }
+      .testimonial-photo { height: 260px; }
+      .testimonial-nav { display: none; }
+      .faq-header { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="#" class="logo">
+      <span class="logo-icon"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></span>
+      Realestay
+    </a>
+    <nav class="nav">
+      <a href="#">Rent</a>
+      <a href="#">Buy</a>
+      <a href="#">Sell</a>
+      <a href="#" class="nav-dropdown">Manage Property <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></button>
+      <button class="icon-btn" aria-label="Account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
+      <a href="#" class="btn-get-started">Get Started</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <img class="hero-bg-img" src="assets/hero_house.png" alt="" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="badge"><span class="badge-dot"></span> 100% Trusted</div>
+      <h1>Buy, rent, or sell<br>your property easily</h1>
+      <p>A great platform to buy, sell, or even rent your properties without any comisions.</p>
+      <a href="#" class="btn-contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Contact Us Now
+      </a>
+    </div>
+    <div class="search-card">
+      <h2>Quick Find Your<br>Propery In The World</h2>
+      <div class="form-group">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+        <input type="text" placeholder="Location" />
+      </div>
+      <div class="form-group">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+        <select><option value="">House Type</option><option>Apartment</option><option>Villa</option><option>Duplex</option><option>Industrial House</option></select>
+      </div>
+      <div class="form-group">
+        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="1"/></svg></span>
+        <input type="text" placeholder="$0.00" />
+      </div>
+      <button class="btn-search">Search Property</button>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><div class="stat-value">9K<span class="plus">+</span> <span class="info">i</span></div><div class="stat-label">Listed Properties</div></div>
+    <div class="stat"><div class="stat-value">23 <span class="plus" style="font-size:1rem;font-weight:500">Million+</span> <span class="info">i</span></div><div class="stat-label">Happy Customers</div></div>
+    <div class="stat"><div class="stat-value">70<span class="plus">+</span> <span class="info">i</span></div><div class="stat-label">Awards</div></div>
+    <div class="stat stat-retention"><div class="stat-value">98<span class="plus">%</span> <span class="info">i</span></div><div class="stat-label">Our customer retention rate proves to lasting relationships.</div></div>
+  </section>
+
+  <section class="about">
+    <p>We're your trusted partner in real estate with <strong>10 years of experience</strong> in United kingdom, our team of experts is dedicated to providing personalized service and achieving the best possible results. From finding your dream home to selling your property at the right price, we're here to guide you every step of the way</p>
+  </section>
+
+  <section class="properties">
+    <div class="section-header">
+      <h2>Explore our latest property</h2>
+      <button class="scroll-btn" aria-label="Scroll down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+    </div>
+    <div class="filters">
+      <button class="filter-btn active">All Type</button>
+      <button class="filter-btn">Industrial House</button>
+      <button class="filter-btn">Apartment</button>
+      <button class="filter-btn">Villa</button>
+      <button class="filter-btn">Duplex</button>
+      <button class="filter-btn">Warehouse</button>
+      <button class="filter-btn">Resort</button>
+      <button class="filter-btn">Office Building</button>
+      <div class="filter-nav">
+        <button aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+    <div class="property-grid">
+      <article class="property-card">
+        <div class="property-img"><img src="assets/prop1.png" alt="The Grandview Residences" /></div>
+        <div class="property-body">
+          <h3>The Grandview Residences</h3>
+          <div class="property-meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> 2 Bed</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 12a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2M4 12v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/></svg> 2 Bath</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> 130 m²</span>
+          </div>
+          <div class="property-price">$450,000</div>
+        </div>
+      </article>
+      <article class="property-card">
+        <div class="property-img"><img src="assets/prop2.png" alt="Royal Crest Manor" /></div>
+        <div class="property-body">
+          <h3>Royal Crest Manor</h3>
+          <div class="property-meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> 2 Bed</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 12a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2M4 12v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/></svg> 2 Bath</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> 130 m²</span>
+          </div>
+          <div class="property-price">$750,000</div>
+        </div>
+      </article>
+      <article class="property-card">
+        <div class="property-img"><img src="assets/prop3.png" alt="Opulence Gardens" /></div>
+        <div class="property-body">
+          <h3>Opulence Gardens</h3>
+          <div class="property-meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> 2 Bed</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 12a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2M4 12v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6"/></svg> 2 Bath</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> 130 m²</span>
+          </div>
+          <div class="property-price">$350,000</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="agents">
+    <div class="agents-inner">
+      <h2>Join with our agents</h2>
+      <div class="agents-card">
+        <div class="agent-photo">
+          <img src="assets/agent.png" alt="Real estate agent" />
+          <a href="#" class="view-more">View More →</a>
+        </div>
+        <div class="agent-info">
+          <h3>We're here to help <span class="highlight">with any questions</span> or concerns you have about buying, selling, or investing in property.</h3>
+          <p>Looking for your dream home or a property investment opportunity? Our expert real estate agents are here to guide you every step of the way!</p>
+          <div class="agent-details">
+            <div>
+              <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Our Agent</h4>
+              <p>Our agents provide up-to-date insights on market trends and pricing</p>
+              <div class="agent-avatars"><img src="assets/avatars.png" alt="Agents" /></div>
+            </div>
+            <div>
+              <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Contact Info</h4>
+              <p class="contact-links">Chat to Support<br>We're here to help<br><a href="mailto:support@agent@community.com">support@agent@community.com</a></p>
+              <p style="margin-top:10px;font-size:0.8rem;color:var(--gray-500)">Follow Us<br>Follow us in Social Media.</p>
+              <div class="socials"><a href="#">𝕏</a><a href="#">f</a><a href="#">in</a></div>
+            </div>
+          </div>
+          <a href="#" class="btn-join">Join Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <h2>What our client say</h2>
+    <div class="testimonial-wrap">
+      <button class="testimonial-nav prev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <div class="quote-icon">“</div>
+          <p>I was blown away by the level of service. They listened to my needs, answered all my questions, and provided expert advice every step of the way. I couldn't have asked for a better experience.</p>
+          <div class="testimonial-author">
+            <h4>Our customers said</h4>
+            <span>Mohammad Madhu<br>CEO of MZ Company</span>
+            <div class="stars">★★★★★</div>
+          </div>
+        </div>
+        <div class="testimonial-photo"><img src="assets/testimonial.png" alt="Client" /></div>
+      </div>
+      <button class="testimonial-nav next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="faq-header">
+      <div>
+        <h2>General FAQs</h2>
+        <p>Everything you need to know about our property and how does it works, can't find the answers?</p>
+        <a href="#">Chat to our team →</a>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <button class="faq-question">1. How do I get started with buying a property? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><p>To begin the property buying process, simply contact one of our real estate agents. We'll schedule a consultation to understand your needs, preferences, and budget, and then present you with a list of available properties that match your criteria.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">2. How long does it take to sell a property? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><p>The time it takes to sell a property varies depending on market conditions, pricing, and property condition. On average, well-priced homes in good condition sell within 30–90 days.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">3. What are the fees involved in buying or selling a property? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq-answer"><p>Our platform operates with transparent pricing and zero hidden commissions for many transactions. Standard agency fees, legal costs, and taxes may still apply depending on your location and transaction type.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 Realestay. All rights reserved. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>
