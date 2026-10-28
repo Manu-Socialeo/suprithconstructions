@@ -27,27 +27,19 @@ export const Hero: React.FC<HeroProps> = ({ onSearch, onOpenContact }) => {
   };
 
   return (
-    <section className="relative min-h-[700px] lg:min-h-[760px] bg-gradient-to-br from-[#041a1d] via-[#072f34] to-[#0c444a] overflow-hidden flex items-center px-4 sm:px-8 lg:px-10 pt-28 sm:pt-32 pb-16">
-      {/* Background Architectural Construction Image with Editorial Lighting */}
-      <img
-        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85"
-        alt="Bespoke luxury villa construction in Mysore by Suprith Constructions"
-        fetchPriority="high"
-        className="absolute right-0 bottom-0 w-full lg:w-[62%] h-full object-cover object-center lg:object-left opacity-25 lg:opacity-35 pointer-events-none select-none mix-blend-luminosity"
-        style={{
-          maskImage: 'linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.8) 40%, black 100%)',
-          WebkitMaskImage: 'linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.8) 40%, black 100%)',
-        }}
-      />
-
-      {/* Atmospheric Architectural Vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(circle at 15% 30%, rgba(16, 85, 93, 0.45) 0%, transparent 60%), linear-gradient(100deg, rgba(4,26,29,0.97) 0%, rgba(7,47,52,0.92) 45%, rgba(12,68,74,0.45) 80%, rgba(12,68,74,0.2) 100%)',
-        }}
-      />
+    <section className="relative min-h-[700px] lg:min-h-[760px] bg-[#041a1d] overflow-hidden flex items-center px-4 sm:px-8 lg:px-10 pt-28 sm:pt-32 pb-16">
+      {/* High-Definition Architectural Background Image — Vibrant, Sharp & Visible */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
+        <img
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=90"
+          alt="Bespoke luxury villa construction in Mysore by Suprith Constructions"
+          fetchPriority="high"
+          className="w-full h-full object-cover object-center lg:object-[80%_center]"
+        />
+        {/* Elegant directional shading: protects text contrast on left while keeping the villa architecture vibrant & clearly visible */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#041a1d]/95 via-[#041a1d]/75 lg:via-[#041a1d]/55 to-black/35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#041a1d] via-transparent to-black/30" />
+      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14">
         {/* Left Hero Content — Architectural Monograph Presentation */}
