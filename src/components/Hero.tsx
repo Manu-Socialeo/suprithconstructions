@@ -28,17 +28,17 @@ export const Hero: React.FC<HeroProps> = ({ onSearch, onOpenContact }) => {
 
   return (
     <section className="relative min-h-[700px] lg:min-h-[760px] bg-[#041a1d] overflow-hidden flex items-center px-4 sm:px-8 lg:px-10 pt-28 sm:pt-32 pb-16">
-      {/* High-Definition Architectural Background Image — Vibrant, Sharp & Visible */}
+      {/* High-Definition Architectural Background Image — 100% Crisp, Vivid & Natural in Full Daylight */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
         <img
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=90"
+          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2560&q=95"
           alt="Bespoke luxury villa construction in Mysore by Suprith Constructions"
           fetchPriority="high"
-          className="w-full h-full object-cover object-center lg:object-[80%_center]"
+          className="w-full h-full object-cover object-center lg:object-[right_center]"
         />
-        {/* Elegant directional shading: protects text contrast on left while keeping the villa architecture vibrant & clearly visible */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#041a1d]/95 via-[#041a1d]/75 lg:via-[#041a1d]/55 to-black/35" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#041a1d] via-transparent to-black/30" />
+        {/* Shading ONLY on the left 55% for text contrast — right side where the villa sits is 100% crisp, bright & unobstructed */}
+        <div className="absolute inset-y-0 left-0 w-full lg:w-[58%] bg-gradient-to-r from-[#041a1d] via-[#041a1d]/92 to-transparent" />
+        <div className="absolute inset-0 bg-black/10" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14">
